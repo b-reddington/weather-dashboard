@@ -16,17 +16,22 @@
         <h1 class="p-3">Weather Dashboard</h1>
     </header>
     <div class="container row">
-        <div class="card col-4">
-            <label for="location" class="form-label card-header"><h2>Search for a city:</h2></label>
+        <div class="card col-sm-12 col-lg-3">
+            <label for="location" class="form-label card-header">
+                <h2>Search for a city:</h2>
+            </label>
             <input class="form-control mb-3 mt-3 p-2" type="search" name="location" id="location"
                 placeholder="Ex: Los Angeles">
-            <button type="button" class="btn btn-primary p-2 mb-3">Search</button>
+            <button type="button" class="btn btn-primary p-2 mb-3" id="searchBtn">Search</button>
             <div class="card-footer">
                 <h2>Previous Searches Here</h2>
             </div>
         </div>
-        <div class="card col-8">
-            <h2 class="card-header">City Name & Date</h2>
+        <div class="card col">
+            <h2 class="card-header">
+                <span id="city">City</span>
+                <span id="date">Date</span>
+            </h2>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Temp: </li>
@@ -37,25 +42,69 @@
                     <div class="card mt-4">
                         <div class="card-header">
                             <h3>5 Day Forecast</h3>
-                            </div>
-                            <div class="card-body row">
-                            <div class="card col">
+                        </div>
+                        <div class="card-body row">
+                            <div class="card col" id="day1">
                                 <div class="card-header">Date</div>
                                 <div class="card-body">
-                                    <li class="list-group-item">Temp: </li>
-                                    <li class="list-group-item">Wind: </li>
-                                    <li class="list-group-item">Humidity: </li>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Temp: </li>
+                                        <li class="list-group-item">Wind: </li>
+                                        <li class="list-group-item">Humidity: </li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="card col" id="day2">
+                                <div class="card-header">Date</div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Temp: </li>
+                                        <li class="list-group-item">Wind: </li>
+                                        <li class="list-group-item">Humidity: </li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="card col" id="day3">
+                                <div class="card-header">Date</div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Temp: </li>
+                                        <li class="list-group-item">Wind: </li>
+                                        <li class="list-group-item">Humidity: </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card col" id="day4">
+                                <div class="card-header">Date</div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Temp: </li>
+                                        <li class="list-group-item">Wind: </li>
+                                        <li class="list-group-item">Humidity: </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card col" id="day5">
+                                <div class="card-header">Date</div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Temp: </li>
+                                        <li class="list-group-item">Wind: </li>
+                                        <li class="list-group-item">Humidity: </li>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 
+    <!-- JS Scripts below -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="./script.js"></script>
 </body>
