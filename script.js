@@ -1,6 +1,8 @@
 let key = '77dc5ebc256a7aa57e335dc878ece7c7';
 // Displays Current Date
-$('#currentDate').text(dayjs().format('MM/DD/YYYY'));
+let now = dayjs().format('MM/DD/YYYY');
+// let futre = dayjs().add(i, 'day');
+$('#currentDate').text(now);
 // Get the value of oldSearches and create an empty array
 let oldSearches = JSON.parse(localStorage.getItem('oldSearches')) || [];
 let searchHistoryId = $('#search-history');
@@ -41,33 +43,6 @@ $('#clearHistory').click(function () {
     $('.historyBtn').remove();
 });
 
-// Create 5-day forecast cards
-function generateForecast() {
-    for (let i = 1; i <= 5; i++) {
-        // create card element
-        const card = $('<div class="card mx-auto col-sm-12 col-md-4 col-lg-2 m-1"></div>').attr('id', `day${i}`);
-        // create card header with dynamic date
-        const header = $('<div class="card-header text-center"></div>').text(`Date ${i}`);
-        // create card body
-        const body = $('<div class="card-body text-center"></div>');
-        // create list group
-        const list = $('<ul class="list-group list-group-flush"></ul>');
-        // add list items with dynamic IDs
-        const temp = $('<li class="list-group-item" id="temp"></li>').text('Temp:');
-        const wind = $('<li class="list-group-item" id="wind"></li>').text('Wind:');
-        const humidity = $('<li class="list-group-item" id="humidity"></li>').text('Humidity:');
-        // append list items to list group
-        list.append(temp, wind, humidity);
-        // append list group to card body
-        body.append(list);
-        // append header and body to card
-        card.append(header, body);
-        // append card to target element
-        $('#5day').append(card);
-    }
-}
-generateForecast();
-
 // Daily Weather API Handling
 
 // When a previous button is clicked, update the value of dailyWeather
@@ -75,6 +50,7 @@ searchHistoryId.on('click', '.historyBtn', function () {
     const cityName = $(this).val();
     $('#location').val(cityName); // Set input value to clicked button value
     dailyWeather(cityName);
+    forecast(cityName);
 });
 
 function dailyWeather() {
@@ -90,3 +66,45 @@ function dailyWeather() {
         $('#dailyHumidity').text(`Humidity: ${data.main.humidity}%`);
     });
 }
+
+// 5 Day Forecast API Handling
+
+// Create 5-day forecast cards
+function generateForecast() {
+    for (let i = 1; i < 6; i++) {
+        // create card element
+        const card = $('<div class="card mx-auto col-sm-12 col-md-4 col-lg-2 m-1"></div>').attr('id', `day${i}`);
+        // create card header with incrementing date
+        const header = $('<div class="card-header text-center"></div>').text(`${dayjs().add(i, 'day').format("MM-DD-YYYY")}`);
+        // create card body
+        const body = $('<div class="card-body text-center"></div>');
+        // create list group
+        const list = $('<ul class="list-group list-group-flush"></ul>');
+        // add list items with IDs
+        const temp = $(`<li class="list-group-item" id="temp${i}"></li>`).text('Temp:');
+        const wind = $(`<li class="list-group-item" id="wind${i}"></li>`).text('Wind:');
+        const humidity = $(`<li class="list-group-item" id="humidity${i}"></li>`).text('Humidity:');
+        // append list items to list group
+        list.append(temp, wind, humidity);
+        // append list group to card body
+        body.append(list);
+        // append header and body to card
+        card.append(header, body);
+        // append card to target element
+        $('#5day').append(card);
+    }
+}
+
+function forecast() {
+    let cityName = $('#location').val();
+    let temp = JSON.stringify(data.main.temp);
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${key}&units=imperial`)
+    .then((response) => response.json())
+    .then((data) => {
+        for (let i = 0; i < 6; i++) {
+
+        }
+    })
+}
+
+generateForecast();
