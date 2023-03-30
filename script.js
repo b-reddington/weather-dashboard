@@ -1,10 +1,9 @@
 let key = '77dc5ebc256a7aa57e335dc878ece7c7';
-let searchVal = $('#location').val().trim();
 // Displays Current Date
 $('#currentDate').text(dayjs().format('MM/DD/YYYY'));
 // Get the value of oldSearches and create an empty array
 let oldSearches = JSON.parse(localStorage.getItem('oldSearches')) || [];
-
+let searchHistoryId = $('#search-history');
 // When Button is Clicked, Update headers with context of input & save to localStorage
 $('#searchBtn').click(function () {
     // Push the value of #location into the empty array
@@ -13,20 +12,19 @@ $('#searchBtn').click(function () {
     let oldSearchesStr = JSON.stringify(oldSearches);
     // Store the string in local storage
     localStorage.setItem('oldSearches', oldSearchesStr);
-
-    $('#city').text($('#location').val());
     const newBtn = $('<input type="button" class="btn btn-light col-12 mb-2 historyBtn" />').val($('#location').val());
-    $('#search-history').append(newBtn);
+    searchHistoryId.append(newBtn);
+    dailyWeather();
 });
 
 // This block of code creates buttons based on what is stored in localStorage
 $.each(oldSearches, function (i, value) {
     const newBtn = $('<input type="button" class="btn btn-light col-12 mb-2 historyBtn" />').val(value);
-    $('#search-history').append(newBtn);
+    searchHistoryId.append(newBtn);
 });
 
 // Binds click event to the search-history container
-$('#search-history').on('click', '.historyBtn', function () {
+searchHistoryId.on('click', '.historyBtn', function () {
     $('#city').text($(this).val());
 });
 
@@ -42,3 +40,53 @@ $('#clearHistory').click(function () {
     // Remove history button
     $('.historyBtn').remove();
 });
+
+// Create 5-day forecast cards
+function generateForecast() {
+    for (let i = 1; i <= 5; i++) {
+        // create card element
+        const card = $('<div class="card mx-auto col-sm-12 col-md-4 col-lg-2 m-1"></div>').attr('id', `day${i}`);
+        // create card header with dynamic date
+        const header = $('<div class="card-header text-center"></div>').text(`Date ${i}`);
+        // create card body
+        const body = $('<div class="card-body text-center"></div>');
+        // create list group
+        const list = $('<ul class="list-group list-group-flush"></ul>');
+        // add list items with dynamic IDs
+        const temp = $('<li class="list-group-item" id="temp"></li>').text('Temp:');
+        const wind = $('<li class="list-group-item" id="wind"></li>').text('Wind:');
+        const humidity = $('<li class="list-group-item" id="humidity"></li>').text('Humidity:');
+        // append list items to list group
+        list.append(temp, wind, humidity);
+        // append list group to card body
+        body.append(list);
+        // append header and body to card
+        card.append(header, body);
+        // append card to target element
+        $('#5day').append(card);
+    }
+}
+generateForecast();
+
+// Daily Weather API Handling
+
+// When a previous button is clicked, update the value of dailyWeather
+searchHistoryId.on('click', '.historyBtn', function () {
+    const cityName = $(this).val();
+    $('#location').val(cityName); // Set input value to clicked button value
+    dailyWeather(cityName);
+});
+
+function dailyWeather() {
+    let cityName = $('#location').val();
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key}&units=imperial`)
+    .then((response) => response.json())
+    .then((data) => {
+        // Updates the Header
+        $('#city').text(`${$('#location').val()}`);
+        // Updates the Body
+        $('#dailyTemp').text(`Temp: ${data.main.temp} F`);
+        $('#dailyWind').text(`Wind: ${data.wind.speed} Mph`);
+        $('#dailyHumidity').text(`Humidity: ${data.main.humidity}%`);
+    });
+}
