@@ -56,45 +56,45 @@ searchHistoryId.on('click', '.historyBtn', function () {
 function dailyWeather() {
     let cityName = $('#location').val();
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key}&units=imperial`)
-    .then((response) => response.json())
-    .then((data) => {
-        // Updates the Header
-        $('#city').text(`${$('#location').val()}`);
-        // Updates the Body
-        $('#dailyTemp').text(`Temp: ${data.main.temp} F`);
-        $('#dailyWind').text(`Wind: ${data.wind.speed} Mph`);
-        $('#dailyHumidity').text(`Humidity: ${data.main.humidity}%`);
-    });
+        .then((response) => response.json())
+        .then((data) => {
+            // Updates the Header
+            $('#city').text(`${$('#location').val()}`);
+            // Updates the Body
+            $('#dailyTemp').text(`Temp: ${data.main.temp} F`);
+            $('#dailyWind').text(`Wind: ${data.wind.speed} Mph`);
+            $('#dailyHumidity').text(`Humidity: ${data.main.humidity}%`);
+        });
 }
 
 // 5 Day Forecast API Handling
 function forecast() {
     let cityName = $('#location').val();
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${key}&units=imperial`)
-    .then((response) => response.json())
-    .then((data) => {
-        for (let i = 1; i <= 5; i++) {
+        .then((response) => response.json())
+        .then((data) => {
+            for (let i = 1; i <= 5; i++) {
 
-            // create card element
-            const card = $('<div class="card mx-auto col-sm-12 col-md-4 col-lg-2 m-1"></div>').attr('id', `day${i}`);
-            // create card header with incrementing date
-            const header = $('<div class="card-header"></div>').text(`${dayjs().add(i, 'day').format("MM-DD-YYYY")}`);
-            // create card body
-            const body = $('<div class="card-body"></div>');
-            // create list group
-            const li = $('<ul class="list-group list-group-flush"></ul>');
-            // add list items with IDs
-            let temp = $(`<li class="list-group-item" id="temp${i}"></li>`).text(data.list[i].main.temp + " F");
-            let wind = $(`<li class="list-group-item" id="wind${i}"></li>`).text(data.list[i].wind.speed + " Mph");
-            let humidity = $(`<li class="list-group-item" id="humidity${i}"></li>`).text(data.list[i].main.humidity + " %");
-            // append list items to list group
-            li.append(temp, wind, humidity);
-            // append list group to card body
-            body.append(li);
-            // append header and body to card
-            card.append(header, body);
-            // append card to target element
-            $('#5day').append(card);
-        }
-    })
+                // Create card element
+                const card = $('<div class="card mx-auto col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-2  m-1"></div>').attr('id', `day${i}`);
+                // Create card header with incrementing date
+                const header = $('<div class="card-header"></div>').text(`${dayjs().add(i, 'day').format("MM-DD-YYYY")}`);
+                // Create card body
+                const body = $('<div class="card-body"></div>');
+                // Create list group
+                const li = $('<ul class="list-group list-group-flush"></ul>');
+                // Add list items with IDs
+                let temp = $(`<li class="list-group-item" id="temp${i}"></li>`).text(data.list[i].main.temp + " F");
+                let wind = $(`<li class="list-group-item" id="wind${i}"></li>`).text(data.list[i].wind.speed + " Mph");
+                let humidity = $(`<li class="list-group-item" id="humidity${i}"></li>`).text(data.list[i].main.humidity + " %");
+                // Append list items to list group
+                li.append(temp, wind, humidity);
+                // Append list group to card body
+                body.append(li);
+                // Append header and body to card
+                card.append(header, body);
+                // Append card to target element
+                $('#5day').append(card);
+            }
+        })
 }
