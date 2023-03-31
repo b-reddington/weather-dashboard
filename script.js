@@ -16,7 +16,9 @@ $('#searchBtn').click(function () {
     localStorage.setItem('oldSearches', oldSearchesStr);
     const newBtn = $('<input type="button" class="btn btn-light col-12 mb-2 historyBtn" />').val($('#location').val());
     searchHistoryId.append(newBtn);
+    removeForecast();
     dailyWeather();
+    forecast();
 });
 
 // This block of code creates buttons based on what is stored in localStorage
@@ -28,6 +30,7 @@ $.each(oldSearches, function (i, value) {
 // Binds click event to the search-history container
 searchHistoryId.on('click', '.historyBtn', function () {
     $('#city').text($(this).val());
+    removeForecast();
 });
 
 // Create a clear History Button in the historyFooter div
@@ -53,6 +56,12 @@ searchHistoryId.on('click', '.historyBtn', function () {
     forecast(cityName);
 });
 
+function removeForecast() {
+    for (let i = 0; i <= 5; i++) {
+        $('#day' + i).remove();
+    }
+}
+
 function dailyWeather() {
     let cityName = $('#location').val();
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key}&units=imperial`)
@@ -74,7 +83,6 @@ function forecast() {
         .then((response) => response.json())
         .then((data) => {
             for (let i = 1; i <= 5; i++) {
-
                 // Create card element
                 const card = $('<div class="card mx-auto col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-2  m-1"></div>').attr('id', `day${i}`);
                 // Create card header with incrementing date
