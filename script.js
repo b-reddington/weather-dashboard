@@ -75,7 +75,9 @@ function dailyWeather() {
             $('#dailyTemp').text(`Temp: ${data.main.temp} F`);
             $('#dailyWind').text(`Wind: ${data.wind.speed} Mph`);
             $('#dailyHumidity').text(`Humidity: ${data.main.humidity}%`);
-            console.log(`icon ID: ${data.weather[0].icon}`)
+            // Removes previous icons to avoid duplicate entries
+            $('#weatherIcon').empty();
+
             const weatherIcon = $(`<img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">`)
             $('#weatherIcon').append(weatherIcon);
         });
