@@ -8,7 +8,7 @@ This weather dashboard was completed using HTML, Bootstrap CSS, and JavaScript w
 N/A
 
 ## Usage
-![A preview of the project](./preview.gif)
+![A preview of the project](./assets/images/preview.gif)
 
 ## Credits
 N/A
