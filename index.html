@@ -28,10 +28,12 @@
             </div>
             <div class="card-footer" id="historyFooter"></div>
         </div>
-        <div class="card col-9">
-            <h2 class="card-header" id="dailyWeatherHead">
+        <div class="col-9">
+            <h2 class="card" id="dailyWeatherHead">
+                <div class="card-header">
                 <span id="city">[City Name]</span>
                 <span id="currentDate">Date</span>
+                </div>
             </h2>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
@@ -40,13 +42,11 @@
                     <li class="list-group-item" id="dailyHumidity">Humidity:</li>
                 </ul>
                 <div class="container row">
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h3>5 Day Forecast</h3>
-                        </div>
-                        <div class="card-body row" id="5day">
-                            <!-- 5 day forecast cards inserted here -->
-                        </div>
+                    <div class="card-header mt-2">
+                        <h3>5 Day Forecast</h3>
+                    </div>
+                    <div class="card-body row" id="5day">
+                        <!-- 5 day forecast cards inserted here -->
                     </div>
                 </div>
             </div>
